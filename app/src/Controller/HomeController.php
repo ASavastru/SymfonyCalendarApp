@@ -9,10 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
+    public function home(): Response
+    {
+        if ($this->getUser()) {
+            return $this->render('home/home.html.twig', [
+                'controller_name' => 'HomeController',
+            ]);
+        }
+        return $this->redirectToRoute('app_login');
+    }
+
+    #[Route('/', name: 'app_index')]
     public function index(): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->redirectToRoute('app_home');
     }
 }

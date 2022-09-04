@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="/assets/Calendar.css">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/assets/script.js" defer></script>
+{% endblock %}
+
+{% block body %}
+<div id="makeAppointment">
+    Make Appointment
+</div>
+<section id="page" style="display: flex; justify-content: space-evenly">
+    <section>
+        <div id="container">
+            <div id="header">
+                <div id="monthDisplay"></div>
+                <div>
+                    <button id="backButton">Back</button>
+                    <button id="nextButton">Next</button>
+                </div>
+            </div>
+            <hr/>
+            <div id="weekdays">
+                <div>Monday</div>
+                <div>Tuesday</div>
+                <div>Wednesday</div>
+                <div>Thursday</div>
+                <div>Friday</div>
+                <div>Saturday</div>
+                <div>Sunday</div>
+            </div>
+            <hr/>
+            <div id="calendar"></div>
+        </div>
+        <div id="interstitialModal">
+            <button id="createAppointment">Create New</button>
+            <button id="viewAppointment">View</button>
+        </div>
+        <div style="display: none" id="storeDate"></div>
+        <div id="newAppointmentModal">
+            <h2>New Appointment</h2>
+            <form method="post" id="visibleForm">
+                <input type="number" id="userId" name="userId"></br>
+                <input type="number" id="locationId" name="locationId"></br>
+                <input type="submit" id="submitAppointmentInformation"></br>
+                {#            <input type="hidden" id="insertedDate" name="insertedDate"></br>#}
+                <input type="hidden" id="checkViewOrCreate" name="checkViewOrCreate">
+                <input type="hidden" name="action" value="setAppointment">
+            </form>
+            <button id="saveButton">Save</button>
+            <button id="cancelButton">Cancel</button>
+        </div>
+        <div id="deleteAppointmentModal">
+            <h2>Appointment</h2>
+            <p id="appointmentText"></p>
+            <button id="deleteButton">Delete</button>
+            <button id="closeButton">Close</button>
+        </div>
+        <div id="modalBackDrop"></div>
+        <form method="get" action="/calendar" id="getDataFromDatabase">
+            <input type="text" id="insertedDate" name="insertedDate"></br>
+            <input type="hidden" id="locationFilterGet" name="locationFilterGet"></br>
+        </form>
+        </div>
+        <div>
+            <form method="post" action="/calendar" id="postAppointmentDataToDatabase">
+                <select id="locationDropdown" name="locationDropdown">
+{#                    {% for location in locations %}#}
+{#                        {% if(location.id == defaultLocation.id | number_format) %}#}
+{#                            <option value="{{ location.id }}" selected>{{ location.city }}</option>#}
+{#                        {% else %}#}
+{#                            <option value="{{ location.id }}">{{ location.city }}</option>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+                </select>
+                <input type="hidden" id="insertedDate2" name="insertedDate"></br>
+                 {#                    <input type="hidden" id="locationFilter" name="locationFilter"></br>#}
+            </form>
+        </div>
+    </section>
+    <section id="existingAppointmentsContainer">
+        <div>
+{#            {% for appointment in appointments %}#}
+{#                <div>{{ appointment.user.name }}</div>#}
+{#                <div>{{ appointment.location.city }}</div>#}
+{#            {% endfor %}#}
+        </div>
+    </section>
+</section>
+{% endblock %}
