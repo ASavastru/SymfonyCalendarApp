@@ -128,12 +128,27 @@ function load() {
             // shows appointment
 
             daySquare.addEventListener('click', () => {
-                // openModal(dayString);
-                let x = moment(momentDayString).format('YYYY-MM-DD');
+                let days = document.getElementsByClassName('day');
+                for (let day of days) {
+                    day.classList.remove('active');
+                }
+                daySquare.classList.add('active')
+                const data = new FormData();
+                data.set("date", moment(momentDayString).format('YYYY-MM-DD'))
+                data.set("location", document.getElementById('locationDropdown').value)
+                axios.post("/getAppointments", data).then(function(response){
+                    console.log(response.data);
+                    document.getElementById('viewAppointments').innerHTML = '';
+                    for (let datum of response.data) {
+                        document.getElementById('viewAppointments').innerHTML +=
+                            `<div class="viewAppointmentsDiv">` +
+                            `<p class="userAppointmentsName">` + datum.name + `</p>` +
+                            `<p class="locationAppointmentsAddress">` + datum.location + `</p>` +
+                            `</div>`;
+                        // datum.name + datum.location;
+                    }
+                });
             });
-            // listens for clicks on each div
-            // and calls openModal for the specific date clicked
-
         } else {
             daySquare.classList.add('padding');
             // this makes sure that it doesn't have the
@@ -143,18 +158,21 @@ function load() {
     }
 }
 
-ajaxAxios(insertedDate);
+setAppointment();
 
-function ajaxAxios(date) {
-    document.getElementById('makeAppointment').addEventListener('click', e => {
+function setAppointment(){
+    document.getElementById('makeAppointmentButton').addEventListener('click', ev => {
         const data = new FormData();
-        data.set("insertedDate", moment(date).format('YYYY-MM-DD'))
-        data.set("locationFilter", document.getElementById('locationDropdown').value)
-        data.set('_token', document.getElementById('token').value)
-        axios.post("/makeAppointment", data).then(function(response){
-            console.log(response.data)
-        })
-    })
+        data.set("date", moment(document.getElementsByClassName('active')[0].getAttribute('data-date')).format('YYYY-MM-DD'))
+        data.set("location", document.getElementById('locationDropdown').value)
+        axios.post("/setAppointments", data).then(function (response) {
+            console.log(response.data.error);
+            if(response.data !== 'null' && response.data.error !== 'undefined'){
+                document.getElementById('viewAppointments').innerHTML = response.data.error;
+                console.log(typeof response.data, response.data)
+            }
+        });
+    });
 }
 
 function openModal(date) {
@@ -180,16 +198,16 @@ function openModal(date) {
     // changes style of backDrop a.k.a. shows it
 }
 
-function closeModal() {
-    newAppointmentModal.style.display = 'none';
-    deleteAppointmentModal.style.display = 'none';
-    backDrop.style.display = 'none';
-    appointmentTitleInput.value = '';
-    clicked = null;
-    // closes/clears/resets everything related to the modal
-
-    load();
-}
+// function closeModal() {
+//     newAppointmentModal.style.display = 'none';
+//     deleteAppointmentModal.style.display = 'none';
+//     backDrop.style.display = 'none';
+//     appointmentTitleInput.value = '';
+//     clicked = null;
+//     // closes/clears/resets everything related to the modal
+//
+//     load();
+// }
 
 function saveAppointment() {
     if (appointmentTitleInput.value) {
@@ -255,7 +273,6 @@ function initButtons() {
     document.getElementById('deleteButton').addEventListener('click', deleteAppointment);
 
     document.getElementById('closeButton').addEventListener('click', closeModal);
-
 }
 
 load(); // loads calendar

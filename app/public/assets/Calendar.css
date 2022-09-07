@@ -6,6 +6,12 @@
 /*    background-color: #f9f9f9;*/
 /*}*/
 
+#page {
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 5vw;
+}
+
 button {
     width: 90px;
     cursor: pointer;
@@ -97,6 +103,12 @@ button {
 }
 
 #clickedDay:hover {
+    color: #ff8585;
+    background-color: #2b438a;
+    transition-duration: 0.4s;
+}
+
+.active {
     color: #ff8585;
     background-color: #2b438a;
     transition-duration: 0.4s;
@@ -267,4 +279,29 @@ button {
 #makeAppointment:hover {
     background-color: #262f46;
     color: #f9f9f9;
+}
+
+#makeAppointmentButton {
+    background-color: #262f46;
+    color: #f9f9f9;
+}
+#makeAppointmentButton:hover {
+    background-color: #B0413E;
+    cursor: pointer;
+}
+
+.viewAppointmentsDiv {
+    margin-top: 18px;
+    margin-bottom: 20px;
+    margin-left: 30vw;
+    padding: 10px 20px;
+    border: solid 2px #2b438a;
+}
+
+#userAppointmentsName {
+    color: #262f46;
+}
+
+#locationAppointmentsAddress {
+    color: #262f46;
 }

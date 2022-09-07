@@ -71,4 +71,37 @@ class Appointments
 
         return $this;
     }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return Locations
+     */
+    public function getLocation(): Locations
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param Locations $location
+     */
+    public function setLocation(Locations $location): void
+    {
+        $this->location = $location;
+    }
+
 }

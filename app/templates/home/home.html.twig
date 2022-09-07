@@ -13,10 +13,9 @@
 {% endblock %}
 
 {% block body %}
-<div id="makeAppointment">
-    Make Appointment
-</div>
-<section id="page" style="display: flex; justify-content: space-evenly">
+<section id="page">
+    <section>
+    </section>
     <section>
         <div id="container">
             <div id="header">
@@ -24,6 +23,10 @@
                 <div>
                     <button id="backButton">Back</button>
                     <button id="nextButton">Next</button>
+                    <button id="makeAppointmentButton">Make Appointment</button>
+                    <a href="/logout">
+                        <button id="Logout">Logout</button>
+                    </a>
                 </div>
             </div>
             <hr/>
@@ -50,7 +53,6 @@
                 <input type="number" id="userId" name="userId"></br>
                 <input type="number" id="locationId" name="locationId"></br>
                 <input type="submit" id="submitAppointmentInformation"></br>
-                {#            <input type="hidden" id="insertedDate" name="insertedDate"></br>#}
                 <input type="hidden" id="checkViewOrCreate" name="checkViewOrCreate">
                 <input type="hidden" name="action" value="setAppointment">
             </form>
@@ -63,34 +65,24 @@
             <button id="deleteButton">Delete</button>
             <button id="closeButton">Close</button>
         </div>
-        <div id="modalBackDrop"></div>
-        <form method="get" action="/calendar" id="getDataFromDatabase">
-            <input type="text" id="insertedDate" name="insertedDate"></br>
-            <input type="hidden" id="locationFilterGet" name="locationFilterGet"></br>
-        </form>
-        </div>
         <div>
-            <form method="post" action="/calendar" id="postAppointmentDataToDatabase">
+            <form method="post" action="/home" id="postAppointmentDataToDatabase">
                 <select id="locationDropdown" name="locationDropdown">
-{#                    {% for location in locations %}#}
-{#                        {% if(location.id == defaultLocation.id | number_format) %}#}
-{#                            <option value="{{ location.id }}" selected>{{ location.city }}</option>#}
-{#                        {% else %}#}
-{#                            <option value="{{ location.id }}">{{ location.city }}</option>#}
-{#                        {% endif %}#}
-{#                    {% endfor %}#}
+                    {% for location in locations %}
+                        <option value="{{ location.id }}">
+                            {{ location.city }} {{ location.address }}
+                        </option>
+                    {% endfor %}
                 </select>
                 <input type="hidden" id="insertedDate2" name="insertedDate"></br>
-                 {#                    <input type="hidden" id="locationFilter" name="locationFilter"></br>#}
             </form>
         </div>
+        <div id="appointment">
+
+        </div>
     </section>
-    <section id="existingAppointmentsContainer">
-        <div>
-{#            {% for appointment in appointments %}#}
-{#                <div>{{ appointment.user.name }}</div>#}
-{#                <div>{{ appointment.location.city }}</div>#}
-{#            {% endfor %}#}
+    <section>
+        <div id="viewAppointments">
         </div>
     </section>
 </section>
